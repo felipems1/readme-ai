@@ -54,10 +54,12 @@ export function CreateReadmeForm() {
 
   const setMarkdown = useDataStore((state) => state.setMarkdown)
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL
+
   const onSubmit = async (data: formData) => {
     setLoading(true)
 
-    const response = await fetch('/api/create-readme', {
+    const response = await fetch(`${apiUrl}/api/create-readme`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -66,7 +68,7 @@ export function CreateReadmeForm() {
     })
 
     if (!response.ok) {
-      alert('Ocorreu um erro!')
+      alert('Ocorreu um erro ao gerar o README. Tente novamente mais tarde.')
       setLoading(false)
     }
 
@@ -74,7 +76,7 @@ export function CreateReadmeForm() {
 
     setMarkdown(result.readme.content.parts[0].text)
 
-    router.push('/readme')
+    router.replace('/readme')
     setLoading(false)
   }
 
