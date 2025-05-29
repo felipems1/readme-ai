@@ -6,7 +6,9 @@ export function Header() {
   return (
     <header className="w-full">
       <div className="max-w-2xl mx-auto flex justify-between items-center py-5 px-5 md:px-0">
-        <Link href="/">Readme.Ai</Link>
+        <Link href="/" className="font-bold">
+          Readme.Ai
+        </Link>
         <ModeToggle />
       </div>
       <Separator />
