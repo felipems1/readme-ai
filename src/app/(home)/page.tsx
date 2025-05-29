@@ -1,4 +1,4 @@
-import { CreateReadmeForm } from './components/form'
+import { CreateReadmeForm } from '@/components/create-readme-form'
 
 export default function Home() {
   return (

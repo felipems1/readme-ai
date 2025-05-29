@@ -1,29 +1,26 @@
-import { formData } from '@/app/(home)/components/form'
+import { createReadmeSchema } from '@/schemas/create-readme-schema'
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import { NextRequest, NextResponse } from 'next/server'
 
-interface GenerateReadmeBody {
-  projectName: string
-  projectDescription: string
-  technologies: string
-  installation: string
-  usage: string
-  configuration: string
-  features: string
-  usageExample: string
-  license: string
-  contributing: string
-  contact: string
-  tests: string
-}
-
 export async function POST(request: NextRequest) {
   try {
+    const body = await request.json()
+
+    const parsed = createReadmeSchema.safeParse(body)
+
+    if (!parsed.success) {
+      return NextResponse.json(
+        {
+          error: 'Dados inválidos ou incompletos.',
+          issues: parsed.error.format(),
+        },
+        { status: 400 },
+      )
+    }
+
+    const data = parsed.data
     const genAI = new GoogleGenerativeAI(process.env.API_KEY!)
     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
-
-    const body: GenerateReadmeBody = await request.json()
-    const data = body as formData
 
     const readmePrompt = `
       Crie um arquivo README.md para o seguinte projeto, utilizando o formato Markdown:
@@ -58,11 +55,9 @@ export async function POST(request: NextRequest) {
       5. Evite placeholders genéricos, como "Adicione informações aqui". Utilize exemplos reais, se possível.
 
       Output esperado: O conteúdo gerado deve ser completamente formatado em Markdown, pronto para uso em um arquivo README.md.
-      `
+      `.trim()
 
     const response = await model.generateContent(readmePrompt)
-
-    console.log(response)
 
     const generatedReadme =
       response.response.candidates?.[0] || 'README.md não foi gerado.'
@@ -72,7 +67,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       {
-        error: 'Ocorreu um erro ao gerar o README. Tente novamente mais tarde.',
+        error: 'Erro interno ao gerar o README.',
       },
       { status: 500 },
     )

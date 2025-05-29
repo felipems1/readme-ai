@@ -1,4 +1,4 @@
-import { PreviewReadme } from './components/preview-readme'
+import { PreviewReadme } from '../../components/preview-readme'
 
 export default function Readme() {
   return (

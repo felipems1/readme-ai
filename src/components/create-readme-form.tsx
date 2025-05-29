@@ -1,8 +1,6 @@
 'use client'
 
-import { z } from 'zod'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -11,7 +9,6 @@ import {
   FormLabel,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
 import {
   Select,
   SelectContent,
@@ -21,63 +18,46 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Button } from '@/components/ui/button'
+import { Textarea } from '@/components/ui/textarea'
+import {
+  createReadmeSchema,
+  CreateReadmeType,
+} from '@/schemas/create-readme-schema'
 import { useDataStore } from '@/store/data'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Loader } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { Loader } from 'lucide-react'
-
-const schema = z.object({
-  projectName: z.string(),
-  projectDescription: z.string(),
-  technologies: z.string(),
-  installation: z.string(),
-  usage: z.string(),
-  features: z.string(),
-  license: z.string(),
-  contact: z.string().optional(),
-  contributing: z.string().optional(),
-  configuration: z.string().optional(),
-  test: z.string().optional(),
-})
-
-export type formData = z.infer<typeof schema>
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import { createReadme } from '../services/create-readme'
 
 export function CreateReadmeForm() {
   const [loading, setLoading] = useState(false)
 
-  const form = useForm<formData>({
-    resolver: zodResolver(schema),
+  const form = useForm<CreateReadmeType>({
+    resolver: zodResolver(createReadmeSchema),
   })
 
   const router = useRouter()
 
   const setMarkdown = useDataStore((state) => state.setMarkdown)
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL
-
-  const onSubmit = async (data: formData) => {
+  const onSubmit = async (data: CreateReadmeType) => {
     setLoading(true)
 
-    const response = await fetch(`${apiUrl}/api/create-readme`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
+    const result = await createReadme(data)
 
-    if (!response.ok) {
-      alert('Ocorreu um erro ao gerar o README. Tente novamente mais tarde.')
+    if (!result.success) {
+      toast.error(
+        'Ocorreu um erro ao gerar o README. Tente novamente mais tarde.',
+      )
       setLoading(false)
+      return
     }
 
-    const result = await response.json()
-
-    setMarkdown(result.readme.content.parts[0].text)
-
+    setMarkdown(result.data!)
     router.replace('/readme')
-    setLoading(false)
   }
 
   return (

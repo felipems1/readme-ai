@@ -1,7 +1,8 @@
+import { Header } from '@/components/header'
+import { Toaster } from '@/components/ui/sonner'
+import { ThemeProvider } from '@/providers/theme-provider'
 import type { Metadata } from 'next'
 import './globals.css'
-import { ThemeProvider } from '@/providers/theme-provider'
-import { Header } from '@/components/header'
 
 export const metadata: Metadata = {
   title: 'Readme.Ai',
@@ -25,6 +26,7 @@ export default function RootLayout({
         >
           <Header />
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
