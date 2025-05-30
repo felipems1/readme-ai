@@ -1,41 +1,60 @@
 # Readme.Ai
 
-**Descrição:**
+Gera arquivos README.md com IA a partir de dados inseridos em um formulário.
 
-Este projeto utiliza inteligência artificial para gerar arquivos README.md com base em informações fornecidas por um formulário.  Simplifica a criação de documentação de projetos, automatizando a geração de um README completo e bem formatado.
+## Acesso ao Projeto
 
-**Tecnologias Utilizadas:**
+Você pode acessar o projeto em produção clicando no link abaixo:
+
+🔗 [readme-ai-o6t.vercel.app](readme-ai-o6t.vercel.app)
+
+## Tecnologias Utilizadas
 
 * Next.js
+
 * TypeScript
+
 * Tailwind CSS
-* IA GEMNI AI
 
-**Passos para Instalação:**
+* Shadcn/UI
 
-1. Clone o repositório: `git clone <URL_DO_REPOSITORIO>`
-2. Navegue até a pasta do projeto: `cd <NOME_DO_REPOSITORIO>`
-3. Crie um arquivo `.env` com a variável `API_KEY` (veja o arquivo `.env.example` como referência).
-4. Instale as dependências: `npm install`
+* Google Gemini Ai
 
-**Como Usar:**
+## Requisitos
 
-1. Execute `npm run dev`.
-2. Acesse o projeto em `http://localhost:3000`.
-3. Preencha o formulário com as informações do seu projeto.
-4. Gere o arquivo README.md.
+* Node.js
 
-**Funcionalidades Principais:**
+* Arquivo .env devidamente configurado
 
-* Geração automatizada de arquivos README.md com base em um formulário.
-* Integração com uma API de IA para gerar descrições concisas e informativas.
+## Passos para Instalação
 
+1. Clone o projeto:
+ `git clone https://github.com/felipems1/readme-ai.git`
 
-**Licença:**
+2. Navegue até a pasta: 
+  `cd readme-ai`
 
-MIT
+3. Instale as dependências: 
+  `npm install`
 
+4. Crie um arquivo `.env` com base em `.env.example` e preencha as variáveis de ambiente.
 
-**Contato:**
+## Como Usar
 
-[Meu LinkedIn](https://www.linkedin.com/in/felipems1/)
+* Inicie o servidor de desenvolvimento:
+  `npm run dev`
+
+* Acesse no navegador:
+  `http://localhost:3000`
+
+## Funcionalidades Principais
+
+* Geração automática de arquivos README.md com uso de inteligência artificial (Google Gemini Ai)
+* Formulário para coleta de informações do projeto
+* Resultado em formato Markdown, pronto para uso.
+
+## Contato
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/felipems1/)
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-1DAB5F?style=for-the-badge&labelColor=1DAB5F&color=1DAB5F&logoColor=white)](https://wa.me/5583998719705)
+[![Email](https://img.shields.io/badge/E--mail-D14836?style=for-the-badge&labelColor=D14836&color=D14836)](mailto:083felype@gmail.com)
